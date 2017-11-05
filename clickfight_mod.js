@@ -5,7 +5,7 @@ function gameStart() {
     lastUpdateApplied = 0;
     selectedAmmo = 1;
     joinArena();
-    updateHandle = setInterval(updateAll, 1000);
+    updateHandle = setInterval(updateAll, 0);
     joinTime = 0;
     jumpUpPossible = 0;
     jumpDownPossible = 0;
@@ -81,17 +81,13 @@ function applyJoinArena(str) {
     jumpTimer = parseInt(str.substring(str.indexOf('<jt!>')+5, str.indexOf('</jt!>')));
     jumpTimerChange = parseInt(str.substring(str.indexOf('<jtc!>')+6, str.indexOf('</jtc!>')));
     reloadTime = parseFloat(str.substring(str.indexOf('<rt!>')+5, str.indexOf('</rt!>')));
-    reloadTime = parseInt(reloadTime*1000);
+    reloadTime = 0;
     ownUserid = parseInt(str.substring(str.indexOf('<ownuid!>')+9, str.indexOf('</ownuid!>')));
     arenaLvl = parseInt(str.substring(str.indexOf('<al!>')+5, str.indexOf('</al!>')));
     document.getElementById("arenalvlText").innerHTML = "Your current Arenalevel: "+arenaLvl;
 }
 
 function updateAll() {
-    if (lastUpdate > Date.now()-700) {
-        //console.log("Update abort due to recent update.");
-        return false;
-    }
     lastUpdate = Date.now();
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
@@ -504,7 +500,7 @@ function startAttack() {
     attackType = targetType;
     clearInterval(attackHandle);
     attack();
-    attackHandle = setInterval(attack, reloadTime);
+    attackHandle = setInterval(attack, 0);
 }
 
 function abortAttack() {
@@ -779,7 +775,7 @@ function startRepair() {
     $('#repair').html('Stop Repair');
     //Interval
     repair();
-    repairHandle = setInterval(repair, 5000);
+    repairHandle = setInterval(repair, 0);
 }
 
 function abortRepair() {
